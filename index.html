@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Countdown</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: #444;
+        }
+
+        #countdown {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 1.5rem;
+        }
+
+        .time {
+            padding: 10px;
+            background: #007BFF;
+            color: #fff;
+            border-radius: 5px;
+            min-width: 70px;
+        }
+
+        .label {
+            display: block;
+            font-size: 0.8rem;
+            color: #ddd;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dynamic Event Countdown</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Dynamic Event Countdown</h1>
+            
+            <!-- Input for Event Date -->
+            <label for="eventDate">Enter Event Date and Time:</label>
+            <input type="datetime-local" id="eventDate">
+            <button id="startCountdown">Start Countdown</button>
+    
+            <!-- Countdown Timer Display -->
+            <div id="countdown" style="display: none;">
+                <div class="time">
+                    <span id="days">00</span>
+                    <span class="label">Days</span>
+                </div>
+                <div class="time">
+                    <span id="hours">00</span>
+                    <span class="label">Hours</span>
+                </div>
+                <div class="time">
+                    <span id="minutes">00</span>
+                    <span class="label">Minutes</span>
+                </div>
+                <div class="time">
+                    <span id="seconds">00</span>
+                    <span class="label">Seconds</span>
+                </div>
+            </div>
+       
+    </body>
+    </html>
+    
+
+    <script>
+        // Set the event date (YYYY-MM-DD HH:MM:SS)
+        let countdownFunction; // Store the interval globally
+
+// Start Countdown when the button is clicked
+document.getElementById("startCountdown").addEventListener("click", function () {
+    const userInput = document.getElementById("eventDate").value;
+
+    // Validate user input
+    if (!userInput) {
+        alert("Please enter a valid date and time.");
+        return;
+    }
+
+ 
+
+   
+    const eventDate = new Date(userInput).getTime();
+    if (eventDate <= new Date().getTime()) {
+        alert("The date must be in the future. Please enter a valid date.");
+        return;
+    }
+
+    // Display the countdown container
+    document.getElementById("countdown").style.display = "flex";
+
+    // Start the countdown
+    countdownFunction = setInterval(function () {
+        const now = new Date().getTime();
+        const timeRemaining = eventDate - now;
+
+        // Time calculations
+        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+        // Display the countdown
+        document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
+        document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
+        document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+        document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+
+        // Stop the countdown when the time is up
+        if (timeRemaining < 0) {
+            clearInterval(countdownFunction);
+            document.getElementById("countdown").innerHTML = "<h2>Event Started!</h2>";
+        }
+    }, 1000);
+});
+
+    </script>
+</body>
+</html>
